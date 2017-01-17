@@ -118,6 +118,47 @@ def scan():
 	else:
 		print('No Switchmate devices found');
 
+def getService():
+	# actual service that we're using here
+	svc = device.getServiceByUUID("00001523-1212-efde-1523-785feabcd123")
+	print svc
+	print('\n');
+
+def getAllServices():
+	# list all services
+	services = device.getServices()
+	for s in services:
+		#SwitchmateServiceUUID
+		#Service <uuid=00001523-1212-efde-1523-785feabcd123 handleStart=12 handleEnd=23>
+		print(s);
+	print('\n');
+
+def getAllCharacteristics():
+	# list all Characteristics
+	chars = device.getCharacteristics()
+	handle = 0xC
+	for c in chars:
+		print(c);
+		print "handle:", format(handle, '#02X');
+		handle = handle + 1
+
+		#print(c.getHandle)
+
+		print(c.propertiesToString())
+
+		if(c.supportsRead()):
+			char_val = c.read()
+			print(char_val)
+			#print(char_val, type(char_val))
+	print('\n');
+
+def getAllDescriptors():
+	# not implemented yet in bluepy
+	descrips = device.getDescriptors()
+	for d in descrips:
+		print(d);
+	print('\n');
+
 if __name__ == '__main__':
 	arguments = docopt(__doc__)
 
